@@ -1,0 +1,28 @@
+name: ADMINTOOLS #Im retarded
+version: '${project.version}'
+main: com.plugin.fulladmintools.adminToolsPlugin
+api-version: '1.19'
+author: 7FULL
+description: Admin Tools
+commands:
+  admin:
+    description: Admin Tools
+    usage: /<command>
+    aliases:
+      - at
+      - admintools
+  banList:
+    description: Ban List
+    usage: /<command>
+    aliases:
+      - bl
+  unBan:
+    description: Unban a ip
+    usage: /<command> <player>
+    aliases:
+      - ub
+  ban:
+    description: Ban a player
+    usage: /<command> <player> <reason>
+    aliases:
+      - b
