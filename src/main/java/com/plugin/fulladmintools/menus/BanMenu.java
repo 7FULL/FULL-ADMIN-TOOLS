@@ -147,7 +147,7 @@ import java.util.Date;
         public Inventory getFreezeMenu(Player player, String title){
             final int INVENTORY_SIZE = 45;
 
-            ArrayList<String> frozenPlayers = OtherUtilitys.frozenPlayers;
+            ArrayList<String> frozenPlayers = OtherUtilitys.getFrozenPlayers();
 
             Inventory inv = player.getServer().createInventory(null, INVENTORY_SIZE+9, title);
 

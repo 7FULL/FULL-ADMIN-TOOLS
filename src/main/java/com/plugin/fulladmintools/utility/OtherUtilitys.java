@@ -4,8 +4,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 
@@ -16,7 +14,10 @@ import java.util.ArrayList;
  */
 public class OtherUtilitys {
 
-    public static ArrayList<String> frozenPlayers = new ArrayList<String>();
+    private static ArrayList<String> frozenPlayers = new ArrayList<String>();
+
+    //This stores the muted players and the date when they will be unmuted
+    private static ArrayList<String> mutedPlayers = new ArrayList<String>();
 
     //This method freeze the player
     public static void freezePlayer(Player player){
@@ -68,4 +69,73 @@ public class OtherUtilitys {
         return unfreezeHead;
     }
 
+    public static ArrayList<String> getFrozenPlayers(){
+        return frozenPlayers;
+    }
+
+    public static ArrayList<String> getMutedPlayers(){
+        return mutedPlayers;
+    }
+
+    public static void mutePlayer(Player player, int hours){
+        int time = (int) (System.currentTimeMillis()/1000) + (hours*60*60);
+
+        mutedPlayers.add(player.getDisplayName()+"/_&"+time);
+    }
+
+    public static void unmutePlayer(Player player){
+        // /(& is the separator
+        mutedPlayers.remove(player.getDisplayName()+"/_&"+getMutedTime(player));
+    }
+
+    private static int getMutedTime(Player player){
+        for(String mutedPlayer : mutedPlayers){
+            if(mutedPlayer.contains(player.getDisplayName())){
+                return Integer.parseInt(mutedPlayer.split("/_&")[1]);
+            }
+        }
+
+        return 0;
+    }
+
+    public static boolean isPlayerMuted(Player player){
+        if(getMutedTime(player) > (int) (System.currentTimeMillis()/1000)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public static String getRemainingTime(Player player){
+        String time = "";
+
+        int remainingTime = getMutedTime(player) - (int) (System.currentTimeMillis()/1000);
+
+        int hours = remainingTime/60/60;
+        int minutes = (remainingTime - (hours*60*60))/60;
+        int seconds = remainingTime - (hours*60*60) - (minutes*60);
+
+        if(hours > 0){
+            time = hours + " hours ";
+        }
+
+        if(minutes > 0){
+            time = time + minutes + " minutes ";
+        }
+
+        if(seconds > 0){
+            time = time + seconds + " seconds";
+        }
+
+        return time;
+    }
+
+    //This method checks remaining time for a muted player and unmute him if the time is over
+    public static void checkMutedPlayer(Player player){
+        if(isPlayerMuted(player)){
+            if(getMutedTime(player) < (int) (System.currentTimeMillis()/1000)){
+                unmutePlayer(player);
+            }
+        }
+    }
 }
