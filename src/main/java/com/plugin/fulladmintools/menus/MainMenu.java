@@ -29,6 +29,12 @@ public class MainMenu {
         banMeta.setDisplayName(ChatColor.DARK_RED + "Ban menu");
         ban.setItemMeta(banMeta);
 
+        //Unban button
+        ItemStack unban = new ItemStack(Material.STONE_AXE, 1);
+        ItemMeta unbanMeta = unban.getItemMeta();
+        unbanMeta.setDisplayName(ChatColor.RED + "Unban menu");
+        unban.setItemMeta(unbanMeta);
+
         //Kick button
         ItemStack kick = new ItemStack(Material.IRON_AXE, 1);
         ItemMeta kickMeta = kick.getItemMeta();
@@ -45,6 +51,7 @@ public class MainMenu {
         inv.setItem(0, ban);
         inv.setItem(2, kick);
         inv.setItem(4, freeze);
+        inv.setItem(6, unban);
 
         return inv;
     }

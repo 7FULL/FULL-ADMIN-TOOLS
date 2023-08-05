@@ -20,14 +20,27 @@ public class MenuManager {
     }
 
 
-    public static Inventory getMainMenu(){
+    public Inventory getMainMenu(){
         MainMenu mainMenu = new MainMenu();
         return mainMenu.getMainMenu(player);
     }
 
-    public static Inventory getBanMenu(){
+    public Inventory getBanMenu(){
         BanMenu banMenu = new BanMenu();
         return banMenu.getBanMenu(player);
+    }
+
+    public Inventory getBanListMenu(String title){
+        BanMenu banMenu = new BanMenu();
+        return banMenu.getBanListMenu(player, title);
+    }
+
+    public Inventory getListMenu(String title, boolean freezed){
+        BanMenu banMenu = new BanMenu();
+        if (freezed){
+            return banMenu.getFreezeMenu(player, title);
+        }
+        return banMenu.getOnlinePlayersMenu(player, title);
     }
 
 }

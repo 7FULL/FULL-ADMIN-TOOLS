@@ -1,6 +1,7 @@
 package com.plugin.fulladmintools.commands;
 
 import com.plugin.fulladmintools.AdminToolsPlugin;
+import com.plugin.fulladmintools.utility.BanManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -17,20 +18,23 @@ public class UnBanPlayer implements CommandExecutor {
 
         //We check if it has parameters
         if (strings.length == 0){
-            sender.sendMessage("You need to specify a ip");
+            sender.sendMessage("You need to specify a player");
             return true;
         }
 
-        //We check if the player is actually banned
-        if (!AdminToolsPlugin.getPlugin().getServer().getIPBans().contains(strings[0])){
-            sender.sendMessage("This ip is not banned");
-            return true;
-        }
-
-        //We check if the player has op and is a player
+        //We check if the player has op
         if (sender.isOp()){
             AdminToolsPlugin plugin = AdminToolsPlugin.getPlugin();
-            plugin.getServer().unbanIP(strings[0]);
+            BanManager banManager = new BanManager(plugin);
+
+            boolean aux = banManager.checkBan(strings[0]);
+
+            if (!aux){
+                sender.sendMessage("This player is not banned");
+                return true;
+            }
+
+            banManager.unBan(strings[0]);
         }
 
         return true;

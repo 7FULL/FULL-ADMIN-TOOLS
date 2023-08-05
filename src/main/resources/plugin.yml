@@ -1,28 +1,42 @@
 name: ADMINTOOLS #Im retarded
 version: '${project.version}'
-main: com.plugin.fulladmintools.adminToolsPlugin
+main: com.plugin.fulladmintools.AdminToolsPlugin
 api-version: '1.19'
 author: 7FULL
 description: Admin Tools
 commands:
   admin:
-    description: Admin Tools
+    description: Opens up the admin menu
     usage: /<command>
     aliases:
-      - at
       - admintools
+      - atools
   banList:
-    description: Ban List
+    description: Opens up the ban list (When do it from the console it will be sent to the console)
     usage: /<command>
     aliases:
-      - bl
+      - banl
   unBan:
-    description: Unban a ip
+    description: Unban a player
     usage: /<command> <player>
     aliases:
-      - ub
+      - uban
   ban:
     description: Ban a player
-    usage: /<command> <player> <reason>
+    usage: /<command> <player> <reason> [time]
+  banIp:
+    description: Ban a player ip
+    usage: /<command> <ip>
+  unBanIp:
+    description: Unban a player ip
+    usage: /<command> <ip>
+  banMenu:
+    description: Opens up the ban menu
+    usage: /<command>
     aliases:
-      - b
+      - banm
+  unBanMenu:
+    description: Opens up the unban menu
+    usage: /<command>
+    aliases:
+      - unbanm
