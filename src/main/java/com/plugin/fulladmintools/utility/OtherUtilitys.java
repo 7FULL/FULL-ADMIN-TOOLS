@@ -20,7 +20,8 @@ public class OtherUtilitys {
 
     //This method freeze the player
     public static void freezePlayer(Player player){
-        player.addPotionEffect(PotionEffectType.SLOW.createEffect(1000000, 255));
+        player.setWalkSpeed(0.0f);
+        player.setFreezeTicks(0);
 
         frozenPlayers.add(player.getDisplayName());
     }
@@ -28,14 +29,14 @@ public class OtherUtilitys {
     //This method unfreeze the player
     public static void unfreezePlayer(Player player){
         //Unfreeze the player
-        player.removePotionEffect(PotionEffectType.SLOW);
+        player.setWalkSpeed(0.2f);
 
-        frozenPlayers.remove(player);
+        frozenPlayers.remove(player.getDisplayName());
     }
 
     //This method checks if the player is frozen
     public static boolean isPlayerFrozen(Player player){
-        if(player.getWalkSpeed() == 0 && player.getFlySpeed() == 0 && !player.getAllowFlight() && !player.isFlying() && !player.hasGravity()){
+        if(frozenPlayers.contains(player.getDisplayName())){
             return true;
         }else{
             return false;

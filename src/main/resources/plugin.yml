@@ -40,3 +40,27 @@ commands:
     usage: /<command>
     aliases:
       - unbanm
+  freeze:
+    description: Freeze a player
+    usage: /<command> <player>
+  unFreeze:
+    description: Unfreeze a player
+    usage: /<command> <player>
+  freezeMenu:
+    description: Opens up the freeze menu
+    usage: /<command>
+    aliases:
+      - freezem
+  unFreezeMenu:
+        description: Opens up the unfreeze menu
+        usage: /<command>
+        aliases:
+            - unfreezem
+  kick:
+    description: Kick a player
+    usage: /<command> <player> <reason>
+  kickMenu:
+    description: Opens up the kick menu
+    usage: /<command>
+    aliases:
+      - kickm

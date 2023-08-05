@@ -188,7 +188,7 @@ public class MenuListener implements Listener {
                 //Back button
                 if (item == Material.BARRIER) {
                     player.closeInventory();
-                    Inventory mainMenu = menuManager.getMainMenu();
+                    Inventory mainMenu = menuManager.getBanMenu();
                     player.openInventory(mainMenu);
                 }
             }

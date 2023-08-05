@@ -51,12 +51,24 @@ public class BanManager {
         }
     }
 
-    public void banIP(String playerName){
-        Player playerToBan = plugin.getServer().getPlayerExact(playerName);
+    public boolean banIP(String playerName){
+        Player player = plugin.getServer().getPlayerExact(playerName);
+        //We check for offline players
+        OfflinePlayer offlinePlayer = plugin.getServer().getOfflinePlayer(playerName);
 
-        playerToBan.kickPlayer("You have been banned from the server");
+        if (player == null && offlinePlayer == null){
+            return false;
+        }else{
+            if (player != null){
+                player.kickPlayer("You have been banned from the server");
 
-        plugin.getServer().banIP(playerToBan.getAddress().getAddress().getHostAddress());
+                plugin.getServer().banIP(player.getAddress().getAddress().getHostAddress());
+            }else{
+                plugin.getServer().banIP(offlinePlayer.getPlayer().getAddress().getAddress().getHostAddress());
+            }
+
+            return true;
+        }
     }
 
     public void banIP(InetSocketAddress ip){
@@ -67,8 +79,17 @@ public class BanManager {
         plugin.getServer().getBanList(BanList.Type.NAME).pardon(playerName);
     }
 
-    public void unBanIP(String ip){
-        plugin.getServer().unbanIP(ip);
+    public boolean unBanIP(String playerName){
+        //We check for offline players
+        OfflinePlayer offlinePlayer = plugin.getServer().getOfflinePlayer(playerName);
+
+        if (offlinePlayer == null){
+            return false;
+        }else{
+            plugin.getServer().unbanIP(offlinePlayer.getPlayer().getAddress().getAddress().getHostAddress());
+
+            return true;
+        }
     }
 
     public void unBanIP(InetSocketAddress ip){
