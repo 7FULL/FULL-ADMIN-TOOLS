@@ -51,6 +51,10 @@ public class Mute implements CommandExecutor {
 
         muteUtility.mutePlayer(player, hours);
 
+        sender.sendMessage(ChatColor.GREEN + "Player muted for " + hours + " hours");
+
+        player.sendMessage(ChatColor.RED + "You have been muted for " + hours + " hours");
+
         return true;
     }
 }

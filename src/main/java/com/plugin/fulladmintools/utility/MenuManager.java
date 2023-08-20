@@ -43,4 +43,14 @@ public class MenuManager {
         return banMenu.getOnlinePlayersMenu(player, title);
     }
 
+    public Inventory getUnMuteMenu(String title){
+        BanMenu banMenu = new BanMenu();
+        return banMenu.getMuteMenu(player, title);
+    }
+
+    public Inventory getMuteMenu(String title){
+        BanMenu banMenu = new BanMenu();
+        return banMenu.getOnlinePlayersMenu(player, title, true);
+    }
+
 }

@@ -77,21 +77,29 @@ public class OtherUtilitys {
         return mutedPlayers;
     }
 
-    public static void mutePlayer(Player player, int hours){
-        int time = (int) (System.currentTimeMillis()/1000) + (hours*60*60);
+    public static boolean mutePlayer(Player player, int hours){
+        if (!isPlayerMuted(player)) {
+            int time = (int) (System.currentTimeMillis()/1000) + (hours*60*60);
 
-        mutedPlayers.add(player.getDisplayName()+"/_&"+time);
+            mutedPlayers.add(player.getDisplayName()+"-->"+time+" h");
+
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public static void unmutePlayer(Player player){
         // /(& is the separator
-        mutedPlayers.remove(player.getDisplayName()+"/_&"+getMutedTime(player));
+        mutedPlayers.remove(player.getDisplayName()+"-->"+getMutedTime(player)+" h");
     }
 
     private static int getMutedTime(Player player){
         for(String mutedPlayer : mutedPlayers){
             if(mutedPlayer.contains(player.getDisplayName())){
-                return Integer.parseInt(mutedPlayer.split("/_&")[1]);
+                String aux = mutedPlayer.split("-->")[1];
+
+                return Integer.parseInt(aux.split(" h")[0]);
             }
         }
 

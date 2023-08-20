@@ -219,6 +219,81 @@ import java.util.Date;
             return inv;
         }
 
+        public Inventory getMuteMenu(Player player, String title){
+            final int INVENTORY_SIZE = 45;
+
+            ArrayList<String> mutedPlayers = OtherUtilitys.getMutedPlayers();
+
+            Inventory inv = player.getServer().createInventory(null, INVENTORY_SIZE+9, title);
+
+            //We get the online players and add them to the inventory
+
+            int aux = INVENTORY_SIZE;
+
+            //We get the online players
+            Player[] players = player.getServer().getOnlinePlayers().toArray(new Player[0]);
+
+            if (INVENTORY_SIZE > players.length){
+                aux = players.length;
+            }
+
+            for (int i = 0; i < aux; i++){
+                //If the player is muted we add a muted icon
+                ItemStack item = null;
+                for (int j = 0; j < mutedPlayers.size(); j++){
+                    if (mutedPlayers.get(j).contains(players[i].getDisplayName())) {
+                        item = new ItemStack(Material.PLAYER_HEAD, 1);
+
+                        String name = mutedPlayers.get(j).split("-->")[0] + " " + OtherUtilitys.getRemainingTime(players[i]);
+                        int health = (int) players[i].getHealth();
+                        int food = players[i].getFoodLevel();
+                        int xp = players[i].getLevel();
+                        int kills = players[i].getStatistic(org.bukkit.Statistic.PLAYER_KILLS);
+                        int deaths = players[i].getStatistic(org.bukkit.Statistic.DEATHS);
+
+                        ItemMeta itemMeta = item.getItemMeta();
+                        itemMeta.setDisplayName(name);
+                        ArrayList<String> lore = new ArrayList<>();
+                        lore.add(ChatColor.RED + "Health: " + health);
+                        lore.add(ChatColor.GOLD + "Food: " + food);
+                        lore.add(ChatColor.GREEN + "XP: " + xp);
+                        lore.add(ChatColor.DARK_RED + "Kills: " + kills);
+                        lore.add(ChatColor.AQUA + "Deaths: " + deaths);
+
+                        itemMeta.setLore(lore);
+                        item.setItemMeta(itemMeta);
+                        inv.setItem(i, item);
+                    }
+                }
+
+            }
+
+            //Back button
+            ItemStack back = new ItemStack(Material.BARRIER, 1);
+            ItemMeta backMeta = back.getItemMeta();
+            backMeta.setDisplayName(ChatColor.RED + "Back");
+            back.setItemMeta(backMeta);
+
+            //Decoration
+            ItemStack panel = new ItemStack(Material.RED_STAINED_GLASS_PANE, 1);
+            ItemMeta panelMeta = panel.getItemMeta();
+            panelMeta.setDisplayName(" ");
+            panel.setItemMeta(panelMeta);
+
+            inv.setItem(INVENTORY_SIZE+8, panel);
+            inv.setItem(INVENTORY_SIZE+7, panel);
+            inv.setItem(INVENTORY_SIZE+6, panel);
+            inv.setItem(INVENTORY_SIZE+5, panel);
+
+            inv.setItem(INVENTORY_SIZE+4, back);
+            inv.setItem(INVENTORY_SIZE+3, panel);
+            inv.setItem(INVENTORY_SIZE+2, panel);
+            inv.setItem(INVENTORY_SIZE+1, panel);
+            inv.setItem(INVENTORY_SIZE, panel);
+
+            return inv;
+        }
+
         public Inventory getOnlinePlayersMenu(Player player, String title){
         final int INVENTORY_SIZE = 45;
 
@@ -284,4 +359,72 @@ import java.util.Date;
 
         return inv;
     }
+
+        public Inventory getOnlinePlayersMenu(Player player, String title, boolean muted){
+            final int INVENTORY_SIZE = 45;
+
+            Inventory inv = player.getServer().createInventory(null, INVENTORY_SIZE+9, title);
+
+            //We get the online players and add them to the inventory
+
+            int aux = INVENTORY_SIZE;
+
+            //We get the online players
+            Player[] players = player.getServer().getOnlinePlayers().toArray(new Player[0]);
+
+            if (INVENTORY_SIZE > players.length){
+                aux = players.length;
+            }
+
+            for (int i = 0; i < aux; i++){
+                if (!OtherUtilitys.isPlayerMuted(players[i])){
+                    ItemStack item = new ItemStack(Material.PLAYER_HEAD, 1);
+
+                    String name = players[i].getDisplayName();
+                    int health = (int) players[i].getHealth();
+                    int food = players[i].getFoodLevel();
+                    int xp = players[i].getLevel();
+                    int kills = players[i].getStatistic(org.bukkit.Statistic.PLAYER_KILLS);
+                    int deaths = players[i].getStatistic(org.bukkit.Statistic.DEATHS);
+
+                    ItemMeta itemMeta = item.getItemMeta();
+                    itemMeta.setDisplayName(name);
+                    ArrayList<String> lore = new ArrayList<>();
+                    lore.add(ChatColor.RED + "Health: " + health);
+                    lore.add(ChatColor.GOLD + "Food: " + food);
+                    lore.add(ChatColor.GREEN + "XP: " + xp);
+                    lore.add(ChatColor.DARK_RED + "Kills: " + kills);
+                    lore.add(ChatColor.AQUA + "Deaths: " + deaths);
+
+                    itemMeta.setLore(lore);
+                    item.setItemMeta(itemMeta);
+                    inv.setItem(i, item);
+                }
+            }
+
+
+            //Back button
+            ItemStack back = new ItemStack(Material.BARRIER, 1);
+            ItemMeta backMeta = back.getItemMeta();
+            backMeta.setDisplayName(ChatColor.RED + "Back");
+            back.setItemMeta(backMeta);
+
+            //Decoration
+            ItemStack panel = new ItemStack(Material.RED_STAINED_GLASS_PANE, 1);
+            ItemMeta panelMeta = panel.getItemMeta();
+            panelMeta.setDisplayName(" ");
+            panel.setItemMeta(panelMeta);
+
+            inv.setItem(INVENTORY_SIZE+8, panel);
+            inv.setItem(INVENTORY_SIZE+7, panel);
+            inv.setItem(INVENTORY_SIZE+6, panel);
+            inv.setItem(INVENTORY_SIZE+5, panel);
+            inv.setItem(INVENTORY_SIZE+4, back);
+            inv.setItem(INVENTORY_SIZE+3, panel);
+            inv.setItem(INVENTORY_SIZE+2, panel);
+            inv.setItem(INVENTORY_SIZE+1, panel);
+            inv.setItem(INVENTORY_SIZE, panel);
+
+            return inv;
+        }
 }

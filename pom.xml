@@ -61,7 +61,7 @@
                         </goals>
                         <configuration>
                             <!-- Aquí se define la carpeta de destino, reemplaza la ruta a tu carpeta de plugins -->
-                            <outputDirectory>C:/Users/phgfu/staff/MCServers/1.19.4/plugins</outputDirectory>
+                            <outputDirectory>C:/Users/phgfu/staff/MCServers/1.19.4/FULLADMINTOOLS/plugins</outputDirectory>
                             <resources>
                                 <resource>
                                     <!-- El archivo JAR generado se copiará a la carpeta de destino con el mismo nombre -->

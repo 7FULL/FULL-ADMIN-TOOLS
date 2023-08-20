@@ -33,8 +33,18 @@ public class MenuListener implements Listener {
         //Blocks moving objects if the menu is the AdminMainMenu
         if (title.equalsIgnoreCase("AdminMainMenu") || title.equalsIgnoreCase("BanMenu")
                 || title.equalsIgnoreCase("KickMenu") || title.equalsIgnoreCase("FreezeMenu")
-                || title.equalsIgnoreCase("UnbanMenu") || title.equalsIgnoreCase("BanListMenu")) {
-            Material item = e.getCurrentItem().getType();
+                || title.equalsIgnoreCase("UnbanMenu") || title.equalsIgnoreCase("BanListMenu")
+                || title.equalsIgnoreCase("MuteMenu") || title.equalsIgnoreCase("UnmuteMenu")) {
+
+            Material item = null;
+
+            try {
+                item = e.getCurrentItem().getType();
+            }catch (NullPointerException ex){
+                return;
+            }
+
+            //region <<<<<<<<<<<<<<<<MENUS BUTTONS>>>>>>>>>>>>>>>>>>>>>
 
             //Close button
             if(item == Material.BARRIER){
@@ -68,6 +78,22 @@ public class MenuListener implements Listener {
                 Inventory unbanMenu = menuManager.getListMenu("FreezeMenu", true);
                 player.openInventory(unbanMenu);
             }
+
+            //Mute button
+            if(item == Material.BOOK){
+                player.closeInventory();
+                Inventory unbanMenu = menuManager.getMuteMenu("MuteMenu");
+                player.openInventory(unbanMenu);
+            }
+
+            //Unmute button
+            if(item == Material.ENCHANTED_BOOK){
+                player.closeInventory();
+                Inventory unbanMenu = menuManager.getUnMuteMenu("UnmuteMenu");
+                player.openInventory(unbanMenu);
+            }
+
+            //endregion
 
             //<<<<<<<<<<<<<<<<MENUS>>>>>>>>>>>>>>>>>>>>>
 
@@ -190,6 +216,50 @@ public class MenuListener implements Listener {
                     player.closeInventory();
                     Inventory mainMenu = menuManager.getBanMenu();
                     player.openInventory(mainMenu);
+                }
+            }
+
+            //Menu mute
+            else if (title.equalsIgnoreCase("MuteMenu")) {
+                //Back button
+                if (item == Material.BARRIER) {
+                    player.closeInventory();
+                    Inventory mainMenu = menuManager.getMainMenu();
+                    player.openInventory(mainMenu);
+                }
+
+                //Mute button
+                if (item == Material.PLAYER_HEAD) {
+                    String mutePlayer = e.getCurrentItem().getItemMeta().getDisplayName();
+                    Player mutePlayerObj = plugin.getServer().getPlayerExact(mutePlayer);
+
+                    boolean x = OtherUtilitys.mutePlayer(mutePlayerObj, 1);
+
+                    if (!x){
+                        player.sendMessage("This player is already muted");
+                    }
+
+                    e.getInventory().removeItem(e.getCurrentItem());
+                }
+            }
+
+            //Menu Unmute
+            else if (title.equalsIgnoreCase("UnmuteMenu")) {
+                //Back button
+                if (item == Material.BARRIER) {
+                    player.closeInventory();
+                    Inventory mainMenu = menuManager.getMainMenu();
+                    player.openInventory(mainMenu);
+                }
+
+                //Unmute button
+                if (item == Material.PLAYER_HEAD) {
+                    String unmutePlayer = e.getCurrentItem().getItemMeta().getDisplayName();
+                    Player unmutePlayerObj = plugin.getServer().getPlayerExact(unmutePlayer.split(" ")[0]);
+
+                    OtherUtilitys.unmutePlayer(unmutePlayerObj);
+
+                    e.getInventory().removeItem(e.getCurrentItem());
                 }
             }
             //endregion
